@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:popular_gitrepos/components/layouts/main_layout.dart';
-import 'package:popular_gitrepos/screens/repository_details_screen.dart';
+import 'package:popular_gitrepos/components/home_screen/home_screen_repository_list.dart';
+
+import '../components/home_screen/home_header.dart';
+import '../components/layouts/main_layout.dart';
 
 class HomeScreen extends StatelessWidget {
   static const kRouteName = '/';
@@ -10,11 +11,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      body: Center(
-        child: GestureDetector(
-          onTap: () =>
-              context.push("${RepositoryDetailsScreen.kRouteName}/some"),
-          child: Text('Home Screen'),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 5.0,
+        ),
+        child: Column(
+          children: [
+            HomeHeader(),
+            HomeScreenRepositoryList(),
+          ],
         ),
       ),
     );

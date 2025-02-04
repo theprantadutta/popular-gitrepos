@@ -4,14 +4,10 @@ import 'package:go_router/go_router.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget body;
-  final PreferredSizeWidget? bottom;
-  final List<Widget> actions;
 
   const MainLayout({
     super.key,
     required this.body,
-    this.bottom,
-    this.actions = const [],
   });
 
   Future<bool> _onBackButtonPressed(BuildContext context) async {
