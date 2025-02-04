@@ -26,3 +26,7 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+# Riverpod Lint
+analyzer:
+  plugins:
+    - custom_lint

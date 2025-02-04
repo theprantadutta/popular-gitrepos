@@ -25,12 +25,12 @@ A Flutter-based Android application that displays the most starred GitHub reposi
 
 ## Project Structure
 
-The project follows a modular architecture with:
+The project follows the following structures:
 
-- `lib/core/` - Contains common utilities, themes, and configurations.
-- `lib/features/` - Organized by feature modules (Home, Details, etc.).
+- `lib/constants/` - Contains constants like colors, keys, selector strings etc.
+- `lib/screens/` - Contains screens for this app
 - `lib/services/` - Handles API communication and database storage.
-- `lib/widgets/` - Reusable UI components.
+- `lib/components/` - Reusable UI components.
 
 ## Installation
 
@@ -59,7 +59,7 @@ GET https://api.github.com/search/repositories?q=Android&sort=stars&order=desc
 
 ## Development Guidelines
 
-- Follow SOLID principles and clean architecture.
+- Follow a proper architecture from start to finish.
 - Use Dependency Injection for better maintainability.
 - Ensure code quality with linting and proper formatting.
 - Maintain meaningful commit messages and version control best practices.
