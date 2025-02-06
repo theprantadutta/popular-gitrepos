@@ -6,20 +6,20 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height * 0.05,
+      height: MediaQuery.sizeOf(context).height * 0.06,
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () => Scaffold.of(context).openDrawer(),
-            child: const Center(
-              child: Icon(
-                Icons.menu,
-                size: 24,
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () => Scaffold.of(context).openDrawer(),
+          //   child: const Center(
+          //     child: Icon(
+          //       Icons.menu,
+          //       size: 24,
+          //     ),
+          //   ),
+          // ),
           RichText(
             text: TextSpan(
               children: [
@@ -48,9 +48,9 @@ class HomeHeader extends StatelessWidget {
             // onTap: () => Navigator.of(context).pushNamed(
             //   SearchScreen.kRouteName,
             // ),
-            child: const Center(
+            child: Center(
               child: Icon(
-                Icons.search,
+                Icons.settings_outlined,
                 size: 24,
               ),
             ),

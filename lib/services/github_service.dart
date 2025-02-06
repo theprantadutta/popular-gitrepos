@@ -19,6 +19,7 @@ class GithubService {
     try {
       final response = await HttpService.get(url);
       if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 10));
         return GithubResponseDto.fromJson(json.decode(response.data));
       }
       throw Exception('Failed to get github data');

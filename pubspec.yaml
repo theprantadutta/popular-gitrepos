@@ -48,6 +48,8 @@ dependencies:
   talker_dio_logger: ^4.6.7
   json_annotation: ^4.9.0
   json_serializable: ^6.9.3
+  intl: ^0.20.2
+  skeletonizer: ^1.4.3
 
 dev_dependencies:
   flutter_test:

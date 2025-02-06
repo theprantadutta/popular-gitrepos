@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger_observer.dart';
 
-import 'constants/colors.dart';
 import 'constants/selectors.dart';
 import 'constants/shared_preference_keys.dart';
 
@@ -40,6 +39,10 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
+
+// ignore: library_private_types_in_public_api
+  static _MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>()!;
 }
 
 class _MyAppState extends State<MyApp> {
@@ -96,14 +99,14 @@ class _MyAppState extends State<MyApp> {
         scheme: _flexScheme,
         useMaterial3: true,
         fontFamily: GoogleFonts.ubuntu().fontFamily,
-        scaffoldBackground: kDefaultLightScaffoldColor,
+        // scaffoldBackground: kDefaultLightScaffoldColor,
         textTheme: GoogleFonts.ubuntuTextTheme(),
       ),
       darkTheme: FlexThemeData.dark(
         scheme: _flexScheme,
         useMaterial3: true,
         fontFamily: GoogleFonts.ubuntu().fontFamily,
-        scaffoldBackground: kDefaultDarkScaffoldColor,
+        // scaffoldBackground: kDefaultDarkScaffoldColor,
         textTheme: GoogleFonts.ubuntuTextTheme(),
       ).copyWith(
         brightness: Brightness.dark,

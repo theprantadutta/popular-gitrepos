@@ -14,28 +14,38 @@ class HomeScreenRepositoryList extends ConsumerWidget {
     final repositoryListProvider = ref.watch(
       FetchGithubRepositoriesProvider('Android', 1),
     );
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.88,
-      child: repositoryListProvider.when(
-        data: (data) {
-          final items = data.items;
-          return ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return SingleHomeScreenRepository(repositoryDto: items[index]);
-            },
-          );
-        },
-        error: (error, stackTrace) {
-          return Center(
-            child: Text('Error'),
-          );
-        },
-        loading: () {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+    return Flexible(
+      child: RefreshIndicator(
+        onRefresh: () => ref.refresh(
+          FetchGithubRepositoriesProvider('Android', 1).future,
+        ),
+        child: repositoryListProvider.when(
+          skipLoadingOnRefresh: false,
+          data: (data) {
+            final items = data.items;
+            return ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return SingleHomeScreenRepository(
+                  repositoryDto: items[index],
+                );
+              },
+            );
+          },
+          error: (error, stackTrace) {
+            return Center(
+              child: Text('Error'),
+            );
+          },
+          loading: () {
+            return ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return SingleHomeScreenRepositorySkeletor();
+              },
+            );
+          },
+        ),
       ),
     );
   }

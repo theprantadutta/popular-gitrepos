@@ -1,6 +1,15 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part '../generated/dtos/github_response_dto.g.dart';
+
+final _githubApiDateFormatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+DateTime githubApiDateFromJson(String date) =>
+    _githubApiDateFormatter.parseUtc(date);
+
+String githubApiDateToJson(DateTime date) =>
+    _githubApiDateFormatter.format(date.toUtc());
 
 @JsonSerializable()
 class GithubResponseDto {
@@ -42,6 +51,13 @@ class RepositoryDto {
   final int openIssuesCount;
   final List<String> topics;
   final OwnerDto owner;
+  final String? language;
+  @JsonKey(
+    name: 'updated_at',
+    fromJson: githubApiDateFromJson,
+    toJson: githubApiDateToJson,
+  )
+  final DateTime updatedAt;
 
   RepositoryDto({
     required this.id,
@@ -55,6 +71,8 @@ class RepositoryDto {
     required this.openIssuesCount,
     required this.topics,
     required this.owner,
+    this.language,
+    required this.updatedAt,
   });
 
   /// Connect the generated [_$RepositoryDtoFromJson] function to the `fromJson`
