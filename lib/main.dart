@@ -9,11 +9,11 @@ import 'package:talker_riverpod_logger/talker_riverpod_logger_observer.dart';
 
 import 'constants/selectors.dart';
 import 'constants/shared_preference_keys.dart';
+import 'service_locator/init_service_locators.dart';
 
 Talker? talker;
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   talker = TalkerFlutter.init(
     settings: TalkerSettings(
       enabled: true,
@@ -22,6 +22,8 @@ void main() {
       },
     ),
   );
+  WidgetsFlutterBinding.ensureInitialized();
+  initServiceLocator();
   runApp(
     ProviderScope(
       observers: [
