@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:popular_gitrepos/dtos/github_response_dto.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../constants/colors.dart';
 import '../../constants/selectors.dart';
 import 'single_home_screen_repository_text.dart';
 
@@ -106,7 +107,7 @@ class SingleHomeScreenRepository extends StatelessWidget {
                     Icon(
                       Icons.star,
                       size: 15,
-                      color: Colors.amber,
+                      color: kStarColor,
                     ),
                     SingleHomeScreenRepositoryText(
                       text: repositoryDto.stargazersCount.toString(),
@@ -221,7 +222,7 @@ class SingleHomeScreenRepositorySkeletor extends StatelessWidget {
                     Icon(
                       Icons.star,
                       size: 15,
-                      color: Colors.amber,
+                      color: kStarColor,
                     ),
                     SingleHomeScreenRepositoryText(
                       text: '168348',

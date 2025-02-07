@@ -8,8 +8,11 @@ import '../../main.dart';
 import 'single_home_screen_repository.dart';
 
 class HomeScreenRepositoryList extends ConsumerStatefulWidget {
+  final String searchText;
+
   const HomeScreenRepositoryList({
     super.key,
+    required this.searchText,
   });
 
   @override
@@ -32,6 +35,23 @@ class _HomeScreenRepositoryListState
     repositoryListController.addListener(_repositoryListScrollListener);
   }
 
+  @override
+  void didUpdateWidget(covariant HomeScreenRepositoryList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.searchText != widget.searchText) {
+      setState(() {
+        pageNumber = 1;
+        hasMoreData = true;
+        hasError = false;
+        repositoryList.clear(); // Reset list on new search
+      });
+
+      // Refresh provider with the new search query
+      ref.invalidate(FetchGithubRepositoriesProvider(widget.searchText, 1));
+    }
+  }
+
   Future<void> _repositoryListScrollListener() async {
     if (repositoryListController.position.pixels ==
         repositoryListController.position.maxScrollExtent) {
@@ -43,7 +63,7 @@ class _HomeScreenRepositoryListState
           });
           final _ = await ref.refresh(
             FetchGithubRepositoriesProvider(
-              'Android',
+              widget.searchText,
               pageNumber,
             ).future,
           );
@@ -65,7 +85,7 @@ class _HomeScreenRepositoryListState
   Future<void> _refreshGithubRepository() async {
     talker?.info('Refreshing Salary Summary...');
     try {
-      ref.invalidate(FetchGithubRepositoriesProvider('Android', 1));
+      ref.invalidate(FetchGithubRepositoriesProvider(widget.searchText, 1));
       setState(() {
         pageNumber = 1;
         repositoryList = [];
@@ -84,7 +104,7 @@ class _HomeScreenRepositoryListState
   @override
   Widget build(BuildContext context) {
     final repositoryListProvider = ref.watch(
-      FetchGithubRepositoriesProvider('Android', pageNumber),
+      FetchGithubRepositoriesProvider(widget.searchText, pageNumber),
     );
     return Flexible(
       child: RefreshIndicator(

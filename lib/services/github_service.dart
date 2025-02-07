@@ -32,6 +32,194 @@ class GithubService {
   //   }
   // }
 
+  // static Future<GithubResponseDto> fetchGithubRepositories(
+  //   String search,
+  //   int pageNumber,
+  // ) async {
+  //   const int perPage = 10;
+  //   final database = getIt<AppDatabase>();
+
+  //   try {
+  //     // Check if we have data stored locally
+  //     final localData = await (database.select(database.githubRepositories)
+  //           ..where((t) => t.name.like('%$search%'))
+  //           ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
+  //           ..limit(perPage, offset: (pageNumber - 1) * perPage))
+  //         .get();
+
+  //     if (localData.isNotEmpty) {
+  //       // Convert local data into RepositoryDto list
+  //       final sortedRepositories = localData
+  //           .map((repo) => RepositoryDto(
+  //                 id: repo.id,
+  //                 name: repo.name,
+  //                 fullName: repo.fullName,
+  //                 htmlUrl: repo.htmlUrl,
+  //                 description: repo.description ?? '',
+  //                 stargazersCount: repo.stargazersCount,
+  //                 watchersCount: repo.watchersCount,
+  //                 forksCount: repo.forksCount,
+  //                 openIssuesCount: repo.openIssuesCount,
+  //                 topics: repo.topics?.split(',') ?? [],
+  //                 owner: OwnerDto(
+  //                   login: repo.ownerLogin,
+  //                   avatarUrl: repo.ownerAvatarUrl,
+  //                 ),
+  //                 language: repo.language,
+  //                 updatedAt: repo.updatedAt,
+  //               ))
+  //           .toList();
+
+  //       // Sort the list by stargazersCount in descending order
+  //       sortedRepositories
+  //           .sort((a, b) => b.stargazersCount.compareTo(a.stargazersCount));
+
+  //       // Return the sorted data as GithubResponseDto
+  //       return GithubResponseDto(
+  //         totalCount: sortedRepositories.length,
+  //         items: sortedRepositories,
+  //       );
+  //     }
+
+  //     // If no data is found, fetch from API
+  //     final String url =
+  //         'https://api.github.com/search/repositories?q=$search&sort=stars&order=desc&page=$pageNumber&per_page=$perPage';
+
+  //     final response = await HttpService.get(url);
+  //     if (response.statusCode == 200) {
+  //       final githubResponse =
+  //           GithubResponseDto.fromJson(json.decode(response.data));
+
+  //       // Store fetched data locally
+  //       await database.batch((batch) {
+  //         batch.insertAll(
+  //           database.githubRepositories,
+  //           githubResponse.items
+  //               .map((repo) => GithubRepositoriesCompanion.insert(
+  //                     id: Value(repo.id),
+  //                     name: repo.name,
+  //                     fullName: repo.fullName,
+  //                     htmlUrl: repo.htmlUrl,
+  //                     description: Value(repo.description),
+  //                     stargazersCount: repo.stargazersCount,
+  //                     watchersCount: repo.watchersCount,
+  //                     forksCount: repo.forksCount,
+  //                     openIssuesCount: repo.openIssuesCount,
+  //                     topics: Value(repo.topics.isNotEmpty
+  //                         ? repo.topics.join(',')
+  //                         : null),
+  //                     ownerLogin: repo.owner.login,
+  //                     ownerAvatarUrl: repo.owner.avatarUrl,
+  //                     language: Value(repo.language),
+  //                     updatedAt: repo.updatedAt,
+  //                   ))
+  //               .toList(),
+  //         );
+  //       });
+
+  //       return githubResponse;
+  //     }
+  //     throw Exception('Failed to fetch GitHub data');
+  //   } catch (e) {
+  //     talker?.error('Failed to fetch repositories', e);
+  //     rethrow;
+  //   }
+  // }
+
+  // static Future<GithubResponseDto> fetchGithubRepositories(
+  //   String search,
+  //   int pageNumber,
+  // ) async {
+  //   const int perPage = 10;
+  //   final database = getIt<AppDatabase>();
+
+  //   try {
+  //     // Check if we have data stored locally
+  //     final localData = await (database.select(database.githubRepositories)
+  //           ..where((t) => t.name.like('%$search%'))
+  //           ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
+  //           ..limit(perPage, offset: (pageNumber - 1) * perPage))
+  //         .get();
+
+  //     if (localData.length >= 5) {
+  //       // Convert local data into RepositoryDto list
+  //       final sortedRepositories = localData
+  //           .map((repo) => RepositoryDto(
+  //                 id: repo.id,
+  //                 name: repo.name,
+  //                 fullName: repo.fullName,
+  //                 htmlUrl: repo.htmlUrl,
+  //                 description: repo.description ?? '',
+  //                 stargazersCount: repo.stargazersCount,
+  //                 watchersCount: repo.watchersCount,
+  //                 forksCount: repo.forksCount,
+  //                 openIssuesCount: repo.openIssuesCount,
+  //                 topics: repo.topics?.split(',') ?? [],
+  //                 owner: OwnerDto(
+  //                   login: repo.ownerLogin,
+  //                   avatarUrl: repo.ownerAvatarUrl,
+  //                 ),
+  //                 language: repo.language,
+  //                 updatedAt: repo.updatedAt,
+  //               ))
+  //           .toList();
+
+  //       // Sort the list by stargazersCount in descending order
+  //       sortedRepositories
+  //           .sort((a, b) => b.stargazersCount.compareTo(a.stargazersCount));
+
+  //       // Return the sorted data as GithubResponseDto
+  //       return GithubResponseDto(
+  //         totalCount: sortedRepositories.length,
+  //         items: sortedRepositories,
+  //       );
+  //     }
+
+  //     // If local data has less than 5 results, fetch from API
+  //     final String url =
+  //         'https://api.github.com/search/repositories?q=$search&sort=stars&order=desc&page=$pageNumber&per_page=$perPage';
+
+  //     final response = await HttpService.get(url);
+  //     if (response.statusCode == 200) {
+  //       final githubResponse =
+  //           GithubResponseDto.fromJson(json.decode(response.data));
+
+  //       // Store fetched data locally
+  //       await database.batch((batch) {
+  //         batch.insertAll(
+  //           database.githubRepositories,
+  //           githubResponse.items
+  //               .map((repo) => GithubRepositoriesCompanion.insert(
+  //                     id: Value(repo.id),
+  //                     name: repo.name,
+  //                     fullName: repo.fullName,
+  //                     htmlUrl: repo.htmlUrl,
+  //                     description: Value(repo.description),
+  //                     stargazersCount: repo.stargazersCount,
+  //                     watchersCount: repo.watchersCount,
+  //                     forksCount: repo.forksCount,
+  //                     openIssuesCount: repo.openIssuesCount,
+  //                     topics: Value(repo.topics.isNotEmpty
+  //                         ? repo.topics.join(',')
+  //                         : null),
+  //                     ownerLogin: repo.owner.login,
+  //                     ownerAvatarUrl: repo.owner.avatarUrl,
+  //                     language: Value(repo.language),
+  //                     updatedAt: repo.updatedAt,
+  //                   ))
+  //               .toList(),
+  //         );
+  //       });
+
+  //       return githubResponse;
+  //     }
+  //     throw Exception('Failed to fetch GitHub data');
+  //   } catch (e) {
+  //     talker?.error('Failed to fetch repositories', e);
+  //     rethrow;
+  //   }
+  // }
+
   static Future<GithubResponseDto> fetchGithubRepositories(
     String search,
     int pageNumber,
@@ -42,11 +230,12 @@ class GithubService {
     try {
       // Check if we have data stored locally
       final localData = await (database.select(database.githubRepositories)
+            ..where((t) => t.name.like('%$search%'))
             ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
             ..limit(perPage, offset: (pageNumber - 1) * perPage))
           .get();
 
-      if (localData.isNotEmpty) {
+      if (localData.length >= 5) {
         // Convert local data into RepositoryDto list
         final sortedRepositories = localData
             .map((repo) => RepositoryDto(
@@ -80,7 +269,7 @@ class GithubService {
         );
       }
 
-      // If no data is found, fetch from API
+      // If local data has less than 5 results, fetch from API
       final String url =
           'https://api.github.com/search/repositories?q=$search&sort=stars&order=desc&page=$pageNumber&per_page=$perPage';
 
@@ -89,31 +278,38 @@ class GithubService {
         final githubResponse =
             GithubResponseDto.fromJson(json.decode(response.data));
 
-        // Store fetched data locally
-        await database.batch((batch) {
-          batch.insertAll(
-            database.githubRepositories,
-            githubResponse.items
-                .map((repo) => GithubRepositoriesCompanion.insert(
-                      id: Value(repo.id),
-                      name: repo.name,
-                      fullName: repo.fullName,
-                      htmlUrl: repo.htmlUrl,
-                      description: Value(repo.description),
-                      stargazersCount: repo.stargazersCount,
-                      watchersCount: repo.watchersCount,
-                      forksCount: repo.forksCount,
-                      openIssuesCount: repo.openIssuesCount,
-                      topics: Value(repo.topics.isNotEmpty
-                          ? repo.topics.join(',')
-                          : null),
-                      ownerLogin: repo.owner.login,
-                      ownerAvatarUrl: repo.owner.avatarUrl,
-                      language: Value(repo.language),
-                      updatedAt: repo.updatedAt,
-                    ))
-                .toList(),
-          );
+        // Store fetched data locally if it doesn't already exist
+        await database.batch((batch) async {
+          for (final repo in githubResponse.items) {
+            // Check if the repository already exists in the database
+            final existingRepo =
+                await (database.select(database.githubRepositories)
+                      ..where((t) => t.id.equals(repo.id)))
+                    .getSingleOrNull();
+
+            if (existingRepo == null) {
+              batch.insert(
+                database.githubRepositories,
+                GithubRepositoriesCompanion.insert(
+                  id: Value(repo.id),
+                  name: repo.name,
+                  fullName: repo.fullName,
+                  htmlUrl: repo.htmlUrl,
+                  description: Value(repo.description),
+                  stargazersCount: repo.stargazersCount,
+                  watchersCount: repo.watchersCount,
+                  forksCount: repo.forksCount,
+                  openIssuesCount: repo.openIssuesCount,
+                  topics: Value(
+                      repo.topics.isNotEmpty ? repo.topics.join(',') : null),
+                  ownerLogin: repo.owner.login,
+                  ownerAvatarUrl: repo.owner.avatarUrl,
+                  language: Value(repo.language),
+                  updatedAt: repo.updatedAt,
+                ),
+              );
+            }
+          }
         });
 
         return githubResponse;
