@@ -39,17 +39,17 @@ class RepositoryDto {
   @JsonKey(name: 'full_name')
   final String fullName;
   @JsonKey(name: 'html_url')
-  final String htmlUrl;
+  // final String htmlUrl;
   final String description;
   @JsonKey(name: 'stargazers_count')
   final int stargazersCount;
-  @JsonKey(name: 'watchers_count')
-  final int watchersCount;
-  @JsonKey(name: 'forks_count')
-  final int forksCount;
-  @JsonKey(name: 'open_issues_count')
-  final int openIssuesCount;
-  final List<String> topics;
+  // @JsonKey(name: 'watchers_count')
+  // final int watchersCount;
+  // @JsonKey(name: 'forks_count')
+  // final int forksCount;
+  // @JsonKey(name: 'open_issues_count')
+  // final int openIssuesCount;
+  // final List<String> topics;
   final OwnerDto owner;
   final String? language;
   @JsonKey(
@@ -63,13 +63,13 @@ class RepositoryDto {
     required this.id,
     required this.name,
     required this.fullName,
-    required this.htmlUrl,
+    // required this.htmlUrl,
     required this.description,
     required this.stargazersCount,
-    required this.watchersCount,
-    required this.forksCount,
-    required this.openIssuesCount,
-    required this.topics,
+    // required this.watchersCount,
+    // required this.forksCount,
+    // required this.openIssuesCount,
+    // required this.topics,
     required this.owner,
     this.language,
     required this.updatedAt,
@@ -86,12 +86,12 @@ class RepositoryDto {
 
 @JsonSerializable()
 class OwnerDto {
-  final String login;
+  // final String login;
   @JsonKey(name: 'avatar_url')
   final String avatarUrl;
 
   OwnerDto({
-    required this.login,
+    // required this.login,
     required this.avatarUrl,
   });
 
