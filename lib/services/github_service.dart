@@ -42,6 +42,7 @@ class GithubService {
     try {
       // Check if we have data stored locally
       final localData = await (database.select(database.githubRepositories)
+            ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
             ..limit(perPage, offset: (pageNumber - 1) * perPage))
           .get();
 
