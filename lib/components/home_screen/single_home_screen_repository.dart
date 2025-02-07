@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_touch_ripple/flutter_touch_ripple.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:popular_gitrepos/dtos/github_response_dto.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/selectors.dart';
+import '../../screens/repository_details_screen.dart';
 import 'single_home_screen_repository_text.dart';
 
 class SingleHomeScreenRepository extends StatelessWidget {
@@ -21,7 +23,8 @@ class SingleHomeScreenRepository extends StatelessWidget {
     final kPrimaryColor = Theme.of(context).primaryColor;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return TouchRipple(
-      onTap: () {},
+      onTap: () => context
+          .push('${RepositoryDetailsScreen.kRouteName}/${repositoryDto.id}'),
       rippleColor: kPrimaryColor.withValues(alpha: 0.05),
       child: Container(
         decoration: BoxDecoration(
@@ -71,7 +74,9 @@ class SingleHomeScreenRepository extends StatelessWidget {
               ],
             ),
             Text(
-              repositoryDto.description,
+              repositoryDto.description.isEmpty
+                  ? 'No Descriptions Found'
+                  : repositoryDto.description,
               style: TextStyle(
                 fontSize: 14,
                 color: getSecondaryTextColor(isDarkTheme),

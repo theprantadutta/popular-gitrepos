@@ -2,10 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 import '../entities/github_repositories.dart';
+import '../entities/github_repository_details.dart';
 
 part '../generated/database/database.g.dart';
 
-@DriftDatabase(tables: [GithubRepositories])
+@DriftDatabase(tables: [GithubRepositories, GithubRepositoryDetails])
 class AppDatabase extends _$AppDatabase {
   // After generating code, this class needs to define a `schemaVersion` getter
   // and a constructor telling drift where the database should be stored.

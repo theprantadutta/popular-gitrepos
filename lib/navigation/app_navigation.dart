@@ -21,7 +21,7 @@ class AppNavigation {
       GoRoute(
         path: '${RepositoryDetailsScreen.kRouteName}/:id',
         builder: (context, state) {
-          final id = state.pathParameters["id"]!;
+          final id = int.parse(state.pathParameters["id"]!);
           return RepositoryDetailsScreen(id: id);
         },
       ),

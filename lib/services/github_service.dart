@@ -5,6 +5,7 @@ import 'package:popular_gitrepos/dtos/github_response_dto.dart';
 import 'package:popular_gitrepos/services/http_service.dart';
 
 import '../database/database.dart';
+import '../dtos/single_repository_dto.dart';
 import '../main.dart';
 import '../service_locator/init_service_locators.dart';
 
@@ -230,7 +231,7 @@ class GithubService {
     try {
       // Check if we have data stored locally
       final localData = await (database.select(database.githubRepositories)
-            ..where((t) => t.name.like('%$search%'))
+            ..where((t) => t.topics.like('%$search%'))
             ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
             ..limit(perPage, offset: (pageNumber - 1) * perPage))
           .get();
@@ -248,7 +249,7 @@ class GithubService {
                   // watchersCount: repo.watchersCount,
                   // forksCount: repo.forksCount,
                   // openIssuesCount: repo.openIssuesCount,
-                  // topics: repo.topics?.split(',') ?? [],
+                  topics: repo.topics?.split(',') ?? [],
                   owner: OwnerDto(
                     // login: repo.ownerLogin,
                     avatarUrl: repo.ownerAvatarUrl,
@@ -264,7 +265,6 @@ class GithubService {
 
         // Return the sorted data as GithubResponseDto
         return GithubResponseDto(
-          totalCount: sortedRepositories.length,
           items: sortedRepositories,
         );
       }
@@ -300,8 +300,8 @@ class GithubService {
                   // watchersCount: repo.watchersCount,
                   // forksCount: repo.forksCount,
                   // openIssuesCount: repo.openIssuesCount,
-                  // topics: Value(
-                  //     repo.topics.isNotEmpty ? repo.topics.join(',') : null),
+                  topics: Value(
+                      repo.topics.isNotEmpty ? repo.topics.join(',') : null),
                   // ownerLogin: repo.owner.login,
                   ownerAvatarUrl: repo.owner.avatarUrl,
                   language: Value(repo.language),
@@ -317,6 +317,75 @@ class GithubService {
       throw Exception('Failed to fetch GitHub data');
     } catch (e) {
       talker?.error('Failed to fetch repositories', e);
+      rethrow;
+    }
+  }
+
+  static Future<SingleRepositoryDto> fetchGithubRepositoryById(
+      int repoId) async {
+    final database = getIt<AppDatabase>();
+
+    try {
+      // Check if the repository exists locally
+      final localRepo = await (database.select(database.githubRepositoryDetails)
+            ..where((t) => t.id.equals(repoId)))
+          .getSingleOrNull();
+
+      if (localRepo != null) {
+        return SingleRepositoryDto(
+          id: localRepo.id,
+          name: localRepo.name,
+          fullName: localRepo.fullName,
+          htmlUrl: localRepo.htmlUrl,
+          description: localRepo.description ?? '',
+          stargazersCount: localRepo.stargazersCount,
+          watchersCount: localRepo.watchersCount,
+          openIssuesCount: localRepo.openIssuesCount,
+          forksCount: localRepo.forksCount,
+          topics: localRepo.topics?.split(',') ?? [],
+          owner: SingleRepoOwnerDto(
+            login: localRepo.ownerLogin,
+            avatarUrl: localRepo.ownerAvatarUrl,
+          ),
+          language: localRepo.language,
+          updatedAt: localRepo.updatedAt,
+        );
+      }
+
+      // Fetch from GitHub API if not found locally
+      final String url = 'https://api.github.com/repositories/$repoId';
+      final response = await HttpService.get(url);
+
+      if (response.statusCode == 200) {
+        final repo = SingleRepositoryDto.fromJson(json.decode(response.data));
+
+        // Save to local database
+        await database.into(database.githubRepositoryDetails).insert(
+              GithubRepositoryDetailsCompanion.insert(
+                id: Value(repo.id),
+                name: repo.name,
+                fullName: repo.fullName,
+                htmlUrl: repo.htmlUrl,
+                description: Value(repo.description),
+                stargazersCount: repo.stargazersCount,
+                watchersCount: repo.watchersCount,
+                openIssuesCount: repo.openIssuesCount,
+                forksCount: repo.forksCount,
+                topics: Value(
+                    repo.topics.isNotEmpty ? repo.topics.join(',') : null),
+                ownerLogin: repo.owner.login,
+                ownerAvatarUrl: repo.owner.avatarUrl,
+                language: Value(repo.language),
+                updatedAt: repo.updatedAt,
+              ),
+              mode: InsertMode.insertOrIgnore, // Avoid duplicate inserts
+            );
+
+        return repo;
+      }
+      throw Exception('Failed to fetch repository data');
+    } catch (e) {
+      talker?.error('Failed to fetch repository', e);
       rethrow;
     }
   }
