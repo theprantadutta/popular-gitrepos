@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_touch_ripple/flutter_touch_ripple.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:popular_gitrepos/components/shared/reusable_circle_avatar.dart';
 import 'package:popular_gitrepos/dtos/github_response_dto.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -46,14 +47,9 @@ class SingleHomeScreenRepository extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-                Center(
-                  child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(
-                      repositoryDto.owner.avatarUrl,
-                    ),
-                  ),
+                ReusableCircleAvatar(
+                  avatarUrl: repositoryDto.owner.avatarUrl,
+                  radius: 10,
                 ),
                 Expanded(
                   child: Text(

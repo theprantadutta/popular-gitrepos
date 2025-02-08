@@ -7,10 +7,12 @@ import '../shared/floating_theme_change_button.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget body;
+  final Widget? bottomNavigationBar;
 
   const MainLayout({
     super.key,
     required this.body,
+    this.bottomNavigationBar,
   });
 
   Future<bool> _onBackButtonPressed(BuildContext context) async {
@@ -56,6 +58,7 @@ class MainLayout extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: kReleaseMode
             ? null // Don't show FloatingActionButton in release (production) mode
             : const FloatingThemeChangeButton(),

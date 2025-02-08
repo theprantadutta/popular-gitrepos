@@ -14,6 +14,7 @@ import 'service_locator/init_service_locators.dart';
 Talker? talker;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   talker = TalkerFlutter.init(
     settings: TalkerSettings(
       enabled: true,
@@ -22,7 +23,6 @@ void main() {
       },
     ),
   );
-  WidgetsFlutterBinding.ensureInitialized();
   initServiceLocator();
   runApp(
     ProviderScope(

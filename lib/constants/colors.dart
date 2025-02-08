@@ -9,3 +9,6 @@ final kDefaultDarkScaffoldColor = HexColor("#0b111f");
 
 // UI Colors
 final kStarColor = Colors.amber;
+final kForkColor = Colors.blue;
+final kWatchersColor = Colors.purple;
+final kOpenIssuesColor = Colors.red;

@@ -24,12 +24,27 @@ class SingleRepositoryDto {
   final List<String> topics;
   final SingleRepoOwnerDto owner;
   final String? language;
+  final int size;
   @JsonKey(
     name: 'updated_at',
     fromJson: githubApiDateFromJson,
     toJson: githubApiDateToJson,
   )
   final DateTime updatedAt;
+  @JsonKey(
+    name: 'created_at',
+    fromJson: githubApiDateFromJson,
+    toJson: githubApiDateToJson,
+  )
+  final DateTime createdAt;
+  @JsonKey(
+    name: 'pushed_at',
+    fromJson: githubApiDateFromJson,
+    toJson: githubApiDateToJson,
+  )
+  final DateTime pushedAt;
+
+  final RepositoryLicenseDto? license;
 
   SingleRepositoryDto({
     required this.id,
@@ -44,7 +59,11 @@ class SingleRepositoryDto {
     required this.topics,
     required this.owner,
     this.language,
+    required this.size,
     required this.updatedAt,
+    required this.createdAt,
+    required this.pushedAt,
+    this.license,
   });
 
   /// Connect the generated [_$SingleRepositoryDtoFromJson] function to the `fromJson`
@@ -54,6 +73,22 @@ class SingleRepositoryDto {
 
   /// Connect the generated [_$SingleRepositoryDtoToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$SingleRepositoryDtoToJson(this);
+}
+
+@JsonSerializable()
+class RepositoryLicenseDto {
+  @JsonKey(name: 'spdx_id')
+  final String? spdxId;
+
+  RepositoryLicenseDto({this.spdxId});
+
+  /// Connect the generated [_$RepositoryLicenseDtooFromJson] function to the `fromJson`
+  /// factory.
+  factory RepositoryLicenseDto.fromJson(Map<String, dynamic> json) =>
+      _$RepositoryLicenseDtoFromJson(json);
+
+  /// Connect the generated [_$RepositoryLicenseDtoToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$RepositoryLicenseDtoToJson(this);
 }
 
 @JsonSerializable()

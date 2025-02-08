@@ -14,7 +14,11 @@ class GithubRepositoryDetails extends Table {
   TextColumn get ownerLogin => text()();
   TextColumn get ownerAvatarUrl => text()();
   TextColumn get language => text().nullable()();
+  IntColumn get size => integer()();
+  DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get pushedAt => dateTime()();
+  TextColumn get licenseSpdxId => text()();
 
   @override
   Set<Column> get primaryKey => {id};

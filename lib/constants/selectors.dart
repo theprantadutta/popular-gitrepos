@@ -9,3 +9,6 @@ final kDefaultThemeMode = ThemeMode.system;
 
 Color getSecondaryTextColor(bool isDarkTheme) =>
     isDarkTheme ? Colors.grey.shade400 : Colors.grey.shade600;
+
+// Project Default DateFormat
+const String kDefaultDateFormat = 'MM-dd-yyyy HH:mm';

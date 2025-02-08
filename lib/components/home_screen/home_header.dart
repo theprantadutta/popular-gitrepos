@@ -1,4 +1,8 @@
+import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:popular_gitrepos/service_locator/init_service_locators.dart';
+
+import '../../database/database.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -45,9 +49,11 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            // onTap: () => Navigator.of(context).pushNamed(
-            //   SearchScreen.kRouteName,
-            // ),
+            onTap: () {
+              final db = getIt.get<AppDatabase>();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DriftDbViewer(db)));
+            },
             child: Center(
               child: Icon(
                 Icons.settings_outlined,

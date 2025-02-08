@@ -44,17 +44,28 @@ class _HomeScreenRepositoryListState
         pageNumber = 1;
         hasMoreData = true;
         hasError = false;
-        repositoryList.clear(); // Reset list on new search
+        repositoryList.clear();
       });
 
-      // Refresh provider with the new search query
       ref.invalidate(FetchGithubRepositoriesProvider(widget.searchText, 1));
+    } else {
+      // If coming back from another page, reattach the scroll listener
+      repositoryListController.addListener(_repositoryListScrollListener);
     }
+  }
+
+  // Restore ScrollController Listener on Rebuild
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    repositoryListController.removeListener(_repositoryListScrollListener);
+    repositoryListController.addListener(_repositoryListScrollListener);
   }
 
   Future<void> _repositoryListScrollListener() async {
     if (repositoryListController.position.pixels ==
         repositoryListController.position.maxScrollExtent) {
+      talker?.info('Fetching more github repository...');
       try {
         if (hasMoreData) {
           setState(() {
@@ -125,6 +136,8 @@ class _HomeScreenRepositoryListState
               controller: repositoryListController,
               itemCount: repositoryList.length + (hasMoreData ? 1 : 0),
               itemBuilder: (context, index) {
+                print(
+                    'index: $index, repositoryList.length: ${repositoryList.length}');
                 if (index == repositoryList.length) {
                   return SingleHomeScreenRepositorySkeletor();
                 }
