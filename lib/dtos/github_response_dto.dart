@@ -27,7 +27,7 @@ class RepositoryDto {
   final String name;
   @JsonKey(name: 'full_name')
   final String fullName;
-  final String description;
+  final String? description;
   @JsonKey(name: 'stargazers_count')
   final int stargazersCount;
   final List<String> topics;
@@ -44,7 +44,7 @@ class RepositoryDto {
     required this.id,
     required this.name,
     required this.fullName,
-    required this.description,
+    this.description,
     required this.stargazersCount,
     required this.topics,
     required this.owner,

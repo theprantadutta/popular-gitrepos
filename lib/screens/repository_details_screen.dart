@@ -37,26 +37,24 @@ class RepositoryDetailsScreen extends ConsumerWidget {
                   fetchSingleGithubRepositoryByIdProvider(id).future,
                 ),
                 child: singleRepositoryProvider.when(
-                  data: (data) => SingleChildScrollView(
+                  data: (data) => ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Column(
-                      children: [
-                        RepoDetailRepoSummary(singleRepositoryDto: data),
-                        SizedBox(height: 10),
-                        RepoDetailTimestamps(
-                          createdAt: data.createdAt,
-                          updatedAt: data.updatedAt,
-                          pushedAt: data.pushedAt,
-                        ),
-                        RepoDetailCountRow(repositoryDto: data),
-                        RepoDetailUtils(
-                          language: data.language ?? 'N/A',
-                          size: formatFileSize(data.size),
-                          license: data.license?.spdxId ?? 'N/A',
-                        ),
-                        RepoDetailTopics(topics: data.topics),
-                      ],
-                    ),
+                    children: [
+                      RepoDetailRepoSummary(singleRepositoryDto: data),
+                      SizedBox(height: 10),
+                      RepoDetailTimestamps(
+                        createdAt: data.createdAt,
+                        updatedAt: data.updatedAt,
+                        pushedAt: data.pushedAt,
+                      ),
+                      RepoDetailCountRow(repositoryDto: data),
+                      RepoDetailUtils(
+                        language: data.language ?? 'N/A',
+                        size: formatFileSize(data.size),
+                        license: data.license?.spdxId ?? 'N/A',
+                      ),
+                      RepoDetailTopics(topics: data.topics),
+                    ],
                   ),
                   error: (error, stackTrace) {
                     String errorMessage = 'Something went wrong';

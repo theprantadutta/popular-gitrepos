@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_touch_ripple/flutter_touch_ripple.dart';
 import 'package:go_router/go_router.dart';
@@ -13,125 +16,130 @@ import 'single_home_screen_repository_text.dart';
 
 class SingleHomeScreenRepository extends StatelessWidget {
   final RepositoryDto repositoryDto;
+  final int index;
 
   const SingleHomeScreenRepository({
     super.key,
     required this.repositoryDto,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     final kPrimaryColor = Theme.of(context).primaryColor;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return TouchRipple(
-      onTap: () => context
-          .push('${RepositoryDetailsScreen.kRouteName}/${repositoryDto.id}'),
-      rippleColor: kPrimaryColor.withValues(alpha: 0.05),
-      child: Container(
-        decoration: BoxDecoration(
-          color: kPrimaryColor.withValues(alpha: 0.05),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: EdgeInsets.symmetric(
-          vertical: 5,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 20,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 8,
-          children: [
-            Row(
-              spacing: 10,
-              children: [
-                ReusableCircleAvatar(
-                  avatarUrl: repositoryDto.owner.avatarUrl,
-                  radius: 10,
-                ),
-                Expanded(
-                  child: Text(
-                    repositoryDto.fullName,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+    return FadeInUp(
+      duration: Duration(milliseconds: min(index + 1, 5) * 100),
+      child: TouchRipple(
+        onTap: () => context
+            .push('${RepositoryDetailsScreen.kRouteName}/${repositoryDto.id}'),
+        rippleColor: kPrimaryColor.withValues(alpha: 0.05),
+        child: Container(
+          decoration: BoxDecoration(
+            color: kPrimaryColor.withValues(alpha: 0.05),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 20,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 8,
+            children: [
+              Row(
+                spacing: 10,
+                children: [
+                  ReusableCircleAvatar(
+                    avatarUrl: repositoryDto.owner.avatarUrl,
+                    radius: 10,
                   ),
-                ),
-                Icon(
-                  Icons.open_in_new,
-                  color: kPrimaryColor,
-                  size: 16,
-                ),
-              ],
-            ),
-            Text(
-              repositoryDto.description.isEmpty
-                  ? 'No Descriptions Found'
-                  : repositoryDto.description,
-              style: TextStyle(
-                fontSize: 14,
-                color: getSecondaryTextColor(isDarkTheme),
+                  Expanded(
+                    child: Text(
+                      repositoryDto.fullName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                  Icon(
+                    Icons.open_in_new,
+                    color: kPrimaryColor,
+                    size: 16,
+                  ),
+                ],
               ),
-              maxLines: 2,
-            ),
-            Divider(
-              color: kPrimaryColor.withValues(alpha: 0.15),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                if (repositoryDto.language != null)
+              Text(
+                repositoryDto.description?.trim().isEmpty ?? true
+                    ? 'No Descriptions Found'
+                    : repositoryDto.description!,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: getSecondaryTextColor(isDarkTheme),
+                ),
+                maxLines: 2,
+              ),
+              Divider(
+                color: kPrimaryColor.withValues(alpha: 0.15),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (repositoryDto.language != null)
+                    Row(
+                      spacing: 5,
+                      children: [
+                        Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        SingleHomeScreenRepositoryText(
+                          text: repositoryDto.language!,
+                        ),
+                      ],
+                    ),
                   Row(
                     spacing: 5,
                     children: [
-                      Container(
-                        height: 12,
-                        width: 12,
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: kStarColor,
                       ),
                       SingleHomeScreenRepositoryText(
-                        text: repositoryDto.language!,
+                        text: repositoryDto.stargazersCount.toString(),
                       ),
                     ],
                   ),
-                Row(
-                  spacing: 5,
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 15,
-                      color: kStarColor,
-                    ),
-                    SingleHomeScreenRepositoryText(
-                      text: repositoryDto.stargazersCount.toString(),
-                    ),
-                  ],
-                ),
-                Row(
-                  spacing: 5,
-                  children: [
-                    Icon(
-                      Icons.watch_later_outlined,
-                      size: 15,
-                      color: getSecondaryTextColor(isDarkTheme),
-                    ),
-                    SingleHomeScreenRepositoryText(
-                      text:
-                          'Updated ${DateFormat('d MMM, yyyy').format(repositoryDto.updatedAt)}',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  Row(
+                    spacing: 5,
+                    children: [
+                      Icon(
+                        Icons.watch_later_outlined,
+                        size: 15,
+                        color: getSecondaryTextColor(isDarkTheme),
+                      ),
+                      SingleHomeScreenRepositoryText(
+                        text:
+                            'Updated ${DateFormat('d MMM, yyyy').format(repositoryDto.updatedAt)}',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

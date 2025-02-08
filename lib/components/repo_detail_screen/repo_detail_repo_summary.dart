@@ -52,9 +52,9 @@ class RepoDetailRepoSummary extends StatelessWidget {
           ],
         ),
         Text(
-          singleRepositoryDto.description.isEmpty
+          singleRepositoryDto.description?.trim().isEmpty ?? true
               ? 'No Descriptions Found'
-              : singleRepositoryDto.description,
+              : singleRepositoryDto.description!,
           style: TextStyle(
             fontSize: 16,
             color: getSecondaryTextColor(isDarkTheme),

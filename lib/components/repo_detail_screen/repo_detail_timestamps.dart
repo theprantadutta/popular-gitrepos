@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,40 +20,43 @@ class RepoDetailTimestamps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kPrimaryColor = Theme.of(context).primaryColor;
-    return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: kPrimaryColor.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          RepoDetailCardRow(
-            title: 'Created At',
-            value: DateFormat(kDefaultDateFormat).format(createdAt),
-            iconData: Icons.create,
-          ),
-          Divider(
-            height: 20,
-            thickness: 1,
-            color: kPrimaryColor.withValues(alpha: 0.1),
-          ),
-          RepoDetailCardRow(
-            title: 'Updated At',
-            value: DateFormat(kDefaultDateFormat).format(updatedAt),
-            iconData: Icons.update,
-          ),
-          Divider(
-            height: 20,
-            thickness: 1,
-            color: kPrimaryColor.withValues(alpha: 0.1),
-          ),
-          RepoDetailCardRow(
-            title: 'Pushed At',
-            value: DateFormat(kDefaultDateFormat).format(pushedAt),
-            iconData: Icons.update,
-          ),
-        ],
+    return FadeInUp(
+      duration: Duration(milliseconds: 200),
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: kPrimaryColor.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            RepoDetailCardRow(
+              title: 'Created At',
+              value: DateFormat(kDefaultDateFormat).format(createdAt),
+              iconData: Icons.create,
+            ),
+            Divider(
+              height: 20,
+              thickness: 1,
+              color: kPrimaryColor.withValues(alpha: 0.1),
+            ),
+            RepoDetailCardRow(
+              title: 'Updated At',
+              value: DateFormat(kDefaultDateFormat).format(updatedAt),
+              iconData: Icons.update,
+            ),
+            Divider(
+              height: 20,
+              thickness: 1,
+              color: kPrimaryColor.withValues(alpha: 0.1),
+            ),
+            RepoDetailCardRow(
+              title: 'Pushed At',
+              value: DateFormat(kDefaultDateFormat).format(pushedAt),
+              iconData: Icons.update,
+            ),
+          ],
+        ),
       ),
     );
   }

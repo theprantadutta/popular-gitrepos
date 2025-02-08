@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:popular_gitrepos/components/home_screen/home_screen_repository_list.dart';
 import 'package:popular_gitrepos/components/home_screen/home_screen_search_bar.dart';
 
 import '../components/home_screen/home_header.dart';
+import '../components/home_screen/home_repository_list_listenable.dart';
 import '../components/layouts/main_layout.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,17 +15,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController searchController;
-  Timer? _searchDebounce;
 
   @override
   void initState() {
-    searchController = TextEditingController(text: 'Android');
     super.initState();
+    searchController = TextEditingController(text: 'Android');
   }
 
   @override
   void dispose() {
-    _searchDebounce?.cancel();
+    searchController.dispose();
     super.dispose();
   }
 
@@ -44,21 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             HomeHeader(),
             HomeScreenSearchBar(searchController: searchController),
             SizedBox(height: 5),
-            ValueListenableBuilder(
-              valueListenable: searchController,
-              builder: (context, value, _) {
-                // Cancel previous debounce timer
-                _searchDebounce?.cancel();
-
-                // Start a new debounce timer
-                _searchDebounce = Timer(const Duration(seconds: 3), () {
-                  if (mounted) {
-                    setState(() {}); // Trigger rebuild after debounce delay
-                  }
-                });
-                return HomeScreenRepositoryList(searchText: value.text);
-              },
-            ),
+            HomeRepositoryListListenable(searchController: searchController),
           ],
         ),
       ),

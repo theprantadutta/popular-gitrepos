@@ -12,7 +12,7 @@ class SingleRepositoryDto {
   final String fullName;
   @JsonKey(name: 'html_url')
   final String htmlUrl;
-  final String description;
+  final String? description;
   @JsonKey(name: 'stargazers_count')
   final int stargazersCount;
   @JsonKey(name: 'watchers_count')
@@ -51,7 +51,7 @@ class SingleRepositoryDto {
     required this.name,
     required this.fullName,
     required this.htmlUrl,
-    required this.description,
+    this.description,
     required this.stargazersCount,
     required this.watchersCount,
     required this.forksCount,

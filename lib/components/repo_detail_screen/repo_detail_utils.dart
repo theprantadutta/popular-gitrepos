@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import 'repo_detail_card_row.dart';
@@ -17,40 +18,43 @@ class RepoDetailUtils extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kPrimaryColor = Theme.of(context).primaryColor;
-    return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: kPrimaryColor.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          RepoDetailCardRow(
-            title: 'Language',
-            value: language,
-            iconData: Icons.language_outlined,
-          ),
-          Divider(
-            height: 20,
-            thickness: 1,
-            color: kPrimaryColor.withValues(alpha: 0.1),
-          ),
-          RepoDetailCardRow(
-            title: 'Size',
-            value: size,
-            iconData: Icons.zoom_in_outlined,
-          ),
-          Divider(
-            height: 20,
-            thickness: 1,
-            color: kPrimaryColor.withValues(alpha: 0.1),
-          ),
-          RepoDetailCardRow(
-            title: 'License',
-            value: license,
-            iconData: Icons.security_outlined,
-          ),
-        ],
+    return FadeInUp(
+      duration: Duration(milliseconds: 400),
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: kPrimaryColor.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            RepoDetailCardRow(
+              title: 'Language',
+              value: language,
+              iconData: Icons.language_outlined,
+            ),
+            Divider(
+              height: 20,
+              thickness: 1,
+              color: kPrimaryColor.withValues(alpha: 0.1),
+            ),
+            RepoDetailCardRow(
+              title: 'Size',
+              value: size,
+              iconData: Icons.zoom_in_outlined,
+            ),
+            Divider(
+              height: 20,
+              thickness: 1,
+              color: kPrimaryColor.withValues(alpha: 0.1),
+            ),
+            RepoDetailCardRow(
+              title: 'License',
+              value: license,
+              iconData: Icons.security_outlined,
+            ),
+          ],
+        ),
       ),
     );
   }

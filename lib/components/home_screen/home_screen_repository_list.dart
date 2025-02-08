@@ -143,6 +143,7 @@ class _HomeScreenRepositoryListState
                 }
                 return SingleHomeScreenRepository(
                   repositoryDto: repositoryList[index],
+                  index: index,
                 );
               },
             );
@@ -182,6 +183,7 @@ class _HomeScreenRepositoryListState
                 }
                 return SingleHomeScreenRepository(
                   repositoryDto: repositoryList[index],
+                  index: index,
                 );
               },
             );
