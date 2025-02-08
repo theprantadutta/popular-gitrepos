@@ -4,6 +4,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 import '../main.dart';
 import '../screens/home_screen.dart';
+import '../screens/settings_screen.dart';
 
 class AppNavigation {
   AppNavigation._();
@@ -16,14 +17,21 @@ class AppNavigation {
     routes: [
       GoRoute(
         path: HomeScreen.kRouteName,
+        name: "Home",
         builder: (context, state) => HomeScreen(),
       ),
       GoRoute(
         path: '${RepositoryDetailsScreen.kRouteName}/:id',
+        name: "RepositoryDetails",
         builder: (context, state) {
           final id = int.parse(state.pathParameters["id"]!);
           return RepositoryDetailsScreen(id: id);
         },
+      ),
+      GoRoute(
+        path: SettingsScreen.kRouteName,
+        name: "Settings",
+        builder: (context, state) => SettingsScreen(),
       ),
     ],
   );

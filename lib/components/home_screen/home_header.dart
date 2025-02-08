@@ -1,8 +1,8 @@
-import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:popular_gitrepos/service_locator/init_service_locators.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../database/database.dart';
+import '../../screens/settings_screen.dart';
+import '../shared/hero_icon_component.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -15,15 +15,6 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // GestureDetector(
-          //   onTap: () => Scaffold.of(context).openDrawer(),
-          //   child: const Center(
-          //     child: Icon(
-          //       Icons.menu,
-          //       size: 24,
-          //     ),
-          //   ),
-          // ),
           RichText(
             text: TextSpan(
               children: [
@@ -49,17 +40,8 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              final db = getIt.get<AppDatabase>();
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DriftDbViewer(db)));
-            },
-            child: Center(
-              child: Icon(
-                Icons.settings_outlined,
-                size: 24,
-              ),
-            ),
+            onTap: () => context.push(SettingsScreen.kRouteName),
+            child: HeroIconComponent(),
           ),
         ],
       ),

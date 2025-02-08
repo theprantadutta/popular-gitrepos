@@ -54,6 +54,10 @@ class _MyAppState extends State<MyApp> {
   var _themeMode = kDefaultThemeMode;
   SharedPreferences? _sharedPreferences;
 
+  /// This is needed for components that may have a different theme data
+  bool get isDarkMode => _themeMode == ThemeMode.dark;
+  FlexScheme get flexScheme => _flexScheme;
+
   @override
   void initState() {
     intializeSharedPreferences();
