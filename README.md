@@ -2,6 +2,20 @@
 
 A Flutter-based Android application that displays the most starred GitHub repositories related to "Android." This project is designed to be scalable, maintainable, and follows best practices in software development.
 
+[![Download Latest APK](https://img.shields.io/badge/Download-Latest%20APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/theprantadutta/popular-gitrepos/releases/download/v1.0.0/popular_gitrepos.apk)
+
+## Screenshots
+
+<p align="center">
+  <img alt="Light Theme Screenshot" src="./screenshots/popular_gitrepos_dark_1.jpg" width="45%" />
+  <img alt="Dark Theme Screenshot" src="./screenshots/popular_gitrepos_light_1.jpg" width="45%" />
+</p>
+
+<p align="center">
+  <img alt="Light Theme Screenshot" src="./screenshots/popular_gitrepos_dark_2.jpg" width="45%" />
+  <img alt="Dark Theme Screenshot" src="./screenshots/popular_gitrepos_light_2.jpg" width="45%" />
+</p>
+
 ## Features
 
 - Fetches the most starred repositories from GitHub API using "Android" as the search keyword.
