@@ -15,29 +15,43 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Popular',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 2,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  ),
-                ),
-                TextSpan(
-                  text: 'GitRepos',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w200,
-                    letterSpacing: 2,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  ),
-                ),
-              ],
+          Center(
+            child: Image(
+              image: AssetImage(
+                'assets/images/popular_gitrepos_logo.png',
+              ),
+              height: 30,
+              width: 30,
+              fit: BoxFit.cover,
             ),
+          ),
+          Row(
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Popular',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 2,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'GitRepos',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w200,
+                        letterSpacing: 2,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           GestureDetector(
             onTap: () => context.push(SettingsScreen.kRouteName),

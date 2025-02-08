@@ -1,0 +1,14 @@
+flutter_native_splash:
+  color: "#ffffff"
+  color_dark: "#0b111f"
+
+  image: assets/images/popular_gitrepos_logo.png
+  image_dark: assets/images/popular_gitrepos_logo.png
+
+  android_12:
+    image: assets/images/popular_gitrepos_logo.png
+    image_dark: assets/images/popular_gitrepos_logo.png
+    color: "#ffffff"
+    color_dark: "#0b111f"
+
+  fullscreen: true
