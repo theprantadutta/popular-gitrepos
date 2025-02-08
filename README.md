@@ -11,8 +11,9 @@ A Flutter-based Android application that displays the most starred GitHub reposi
 - Shows repository details, including:
   - Repository owner's name and profile picture.
   - Repository description.
-  - Last update date in `MM-DD-YYYY HH:SS` format.
+  - Last update date in `MM-DD-YYYY HH:SS` format along with creation and last pushed date.
   - Additional useful repository details.
+  - Ability to share a github repository url along with view in github features.
 
 ## Tech Stack
 
@@ -31,6 +32,9 @@ The project follows the following structures:
 - `lib/screens/` - Contains screens for this app
 - `lib/services/` - Handles API communication and database storage.
 - `lib/components/` - Reusable UI components.
+- `lib/providers` - Contains Riverpod states
+- `lib/entities` - Local Database Entities
+- `lib/navigation` - Contains Navigation Logic like router, layouts etc.
 
 ## Installation
 

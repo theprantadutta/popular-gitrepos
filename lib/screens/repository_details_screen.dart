@@ -93,6 +93,7 @@ class RepositoryDetailsScreen extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Column(
                         children: [
+                          RepoDetailTopBarSkeletor(),
                           RepoDetailRepoSummarySkeletor(),
                           SizedBox(height: 10),
                           RepoDetailTimestampsSkeletor(),
