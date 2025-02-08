@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:popular_gitrepos/providers/github_repository_provider.dart';
@@ -5,6 +6,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../dtos/github_response_dto.dart';
 import '../../main.dart';
+import '../shared/something_went_wrong.dart';
 import 'single_home_screen_repository.dart';
 
 class HomeScreenRepositoryList extends ConsumerStatefulWidget {
@@ -136,8 +138,6 @@ class _HomeScreenRepositoryListState
               controller: repositoryListController,
               itemCount: repositoryList.length + (hasMoreData ? 1 : 0),
               itemBuilder: (context, index) {
-                print(
-                    'index: $index, repositoryList.length: ${repositoryList.length}');
                 if (index == repositoryList.length) {
                   return SingleHomeScreenRepositorySkeletor();
                 }
@@ -148,8 +148,19 @@ class _HomeScreenRepositoryListState
             );
           },
           error: (error, stackTrace) {
-            return Center(
-              child: Text('Error'),
+            String errorMessage = 'Something went wrong';
+
+            if (error is DioException) {
+              if (error.response?.statusCode == 403 ||
+                  error.response?.statusCode == 429) {
+                errorMessage = 'Rate limit exceeded. Please try again later.';
+              } else {
+                errorMessage = 'Network error: ${error.response?.statusCode}';
+              }
+            }
+            return SomethingWentWrong(
+              title: errorMessage,
+              onRetryPressed: () => _refreshGithubRepository(),
             );
           },
           loading: () {

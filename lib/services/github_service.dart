@@ -22,10 +22,16 @@ class GithubService {
     try {
       // Check if we have data stored locally
       final localData = await (database.select(database.githubRepositories)
-            ..where((t) => t.topics.like('%$search%'))
+            ..where((t) =>
+                    t.name.like('%$search%') | // Search in repo name
+                    t.description.like('%$search%') | // Search in description
+                    t.topics.like('%$search%') // Keep topic filtering
+                )
             ..orderBy([(t) => OrderingTerm.desc(t.stargazersCount)])
             ..limit(perPage, offset: (pageNumber - 1) * perPage))
           .get();
+
+      talker?.info('Local Repo Length: ${localData.length}');
 
       if (localData.length >= 5) {
         // Convert local data into RepositoryDto list
