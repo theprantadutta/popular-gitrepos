@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:popular_gitrepos/components/layouts/main_layout.dart';
-import 'package:popular_gitrepos/components/repo_detail_screen/repo_detail_bototm_sticky_buton.dart';
-import 'package:popular_gitrepos/components/repo_detail_screen/repo_detail_count_row.dart';
-import 'package:popular_gitrepos/components/repo_detail_screen/repo_detail_top_bar.dart';
-import 'package:popular_gitrepos/components/repo_detail_screen/repo_detail_topics.dart';
-import 'package:popular_gitrepos/components/repo_detail_screen/repo_detail_utils.dart';
-import 'package:popular_gitrepos/providers/single_repo_provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../components/layouts/main_layout.dart';
+import '../components/repo_detail_screen/repo_detail_bototm_sticky_button.dart';
+import '../components/repo_detail_screen/repo_detail_count_row.dart';
 import '../components/repo_detail_screen/repo_detail_repo_summary.dart';
 import '../components/repo_detail_screen/repo_detail_timestamps.dart';
+import '../components/repo_detail_screen/repo_detail_top_bar.dart';
+import '../components/repo_detail_screen/repo_detail_topics.dart';
+import '../components/repo_detail_screen/repo_detail_utils.dart';
 import '../components/shared/something_went_wrong.dart';
+import '../providers/single_repo_provider.dart';
 import '../util/functions.dart';
 
 class RepositoryDetailsScreen extends ConsumerWidget {
@@ -30,7 +30,6 @@ class RepositoryDetailsScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const RepoDetailTopBar(),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () => ref.refresh(
@@ -40,6 +39,9 @@ class RepositoryDetailsScreen extends ConsumerWidget {
                   data: (data) => ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     children: [
+                      RepoDetailTopBar(
+                        githubUrl: data.htmlUrl,
+                      ),
                       RepoDetailRepoSummary(singleRepositoryDto: data),
                       SizedBox(height: 10),
                       RepoDetailTimestamps(
@@ -69,11 +71,21 @@ class RepositoryDetailsScreen extends ConsumerWidget {
                             'Network error: ${error.response?.statusCode}';
                       }
                     }
-                    return SomethingWentWrong(
-                      title: errorMessage,
-                      onRetryPressed: () => ref.refresh(
-                        fetchSingleGithubRepositoryByIdProvider(id).future,
-                      ),
+                    return Column(
+                      children: [
+                        RepoDetailTopBar(
+                          githubUrl: 'https://github.com',
+                        ),
+                        Expanded(
+                          child: SomethingWentWrong(
+                            title: errorMessage,
+                            onRetryPressed: () => ref.refresh(
+                              fetchSingleGithubRepositoryByIdProvider(id)
+                                  .future,
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   },
                   loading: () => Skeletonizer(
@@ -91,13 +103,21 @@ class RepositoryDetailsScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  skipLoadingOnRefresh: false,
                 ),
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: RepoDetailBototmStickyButon(onTap: () {}),
+      bottomNavigationBar: singleRepositoryProvider.when(
+        data: (data) => RepoDetailBototmStickyButton(githubUrl: data.htmlUrl),
+        loading: () => RepoDetailBototmStickyButtonSkeletor(),
+        error: (_, __) => RepoDetailBototmStickyButton(
+          githubUrl: 'https://github.com',
+          hasError: true,
+        ),
+      ),
     );
   }
 }

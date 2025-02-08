@@ -92,7 +92,6 @@ class _ChangeDisplayThemeState extends State<ChangeDisplayTheme> {
       child: Container(
         height: 40,
         margin: EdgeInsets.symmetric(vertical: 5.5),
-        padding: EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
         ),

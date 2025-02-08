@@ -78,6 +78,7 @@ class RepoDetailRepoSummarySkeletor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final kPrimaryColor = Theme.of(context).primaryColor;
     return Column(
       spacing: 10,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,9 +87,12 @@ class RepoDetailRepoSummarySkeletor extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           spacing: 15,
           children: [
-            ReusableCircleAvatar(
-              avatarUrl: 'https://avatars.githubusercontent.com/u/14101776?v=4',
-              radius: 25,
+            Center(
+              child: CircleAvatar(
+                radius: 25,
+                backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
+                child: Text('PD'),
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -51,7 +51,8 @@ class _HomeScreenRepositoryListState
 
       ref.invalidate(FetchGithubRepositoriesProvider(widget.searchText, 1));
     } else {
-      // If coming back from another page, reattach the scroll listener
+      // Remove existing listener before re-adding
+      repositoryListController.removeListener(_repositoryListScrollListener);
       repositoryListController.addListener(_repositoryListScrollListener);
     }
   }
@@ -67,19 +68,12 @@ class _HomeScreenRepositoryListState
   Future<void> _repositoryListScrollListener() async {
     if (repositoryListController.position.pixels ==
         repositoryListController.position.maxScrollExtent) {
-      talker?.info('Fetching more github repository...');
       try {
         if (hasMoreData) {
           setState(() {
             hasError = false;
             pageNumber++;
           });
-          final _ = await ref.refresh(
-            FetchGithubRepositoriesProvider(
-              widget.searchText,
-              pageNumber,
-            ).future,
-          );
         }
       } catch (e) {
         talker?.error(
@@ -91,14 +85,17 @@ class _HomeScreenRepositoryListState
 
   @override
   void dispose() {
+    repositoryListController
+        .removeListener(_repositoryListScrollListener); // Remove it
     repositoryListController.dispose();
     super.dispose();
   }
 
   Future<void> _refreshGithubRepository() async {
-    talker?.info('Refreshing Salary Summary...');
+    talker?.info('Refreshing Github Repository...');
     try {
-      ref.invalidate(FetchGithubRepositoriesProvider(widget.searchText, 1));
+      final _ =
+          ref.refresh(fetchGithubRepositoriesProvider(widget.searchText, 1));
       setState(() {
         pageNumber = 1;
         repositoryList = [];
@@ -117,7 +114,7 @@ class _HomeScreenRepositoryListState
   @override
   Widget build(BuildContext context) {
     final repositoryListProvider = ref.watch(
-      FetchGithubRepositoriesProvider(widget.searchText, pageNumber),
+      fetchGithubRepositoriesProvider(widget.searchText, pageNumber),
     );
     return Flexible(
       child: RefreshIndicator(
@@ -142,6 +139,7 @@ class _HomeScreenRepositoryListState
                   return SingleHomeScreenRepositorySkeletor();
                 }
                 return SingleHomeScreenRepository(
+                  key: ValueKey(repositoryList[index].id),
                   repositoryDto: repositoryList[index],
                   index: index,
                 );
@@ -182,6 +180,7 @@ class _HomeScreenRepositoryListState
                   return SingleHomeScreenRepositorySkeletor();
                 }
                 return SingleHomeScreenRepository(
+                  key: ValueKey(repositoryList[index].id),
                   repositoryDto: repositoryList[index],
                   index: index,
                 );

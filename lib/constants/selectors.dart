@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 final kDefaultFlexScheme = FlexScheme.tealM3;
 
 // Default Theme Mode
-final kDefaultThemeMode = ThemeMode.system;
+final kDefaultThemeMode = ThemeMode.light;
 
 Color getSecondaryTextColor(bool isDarkTheme) =>
     isDarkTheme ? Colors.grey.shade400 : Colors.grey.shade600;

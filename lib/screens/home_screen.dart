@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:popular_gitrepos/components/home_screen/home_screen_search_bar.dart';
 
-import '../components/home_screen/home_header.dart';
 import '../components/home_screen/home_repository_list_listenable.dart';
+import '../components/home_screen/home_screen_search_bar.dart';
+import '../components/home_screen/home_screen_top_bar.dart';
 import '../components/layouts/main_layout.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Column(
           children: [
-            HomeHeader(),
+            HomeScreenTopBar(),
             HomeScreenSearchBar(searchController: searchController),
             SizedBox(height: 5),
             HomeRepositoryListListenable(searchController: searchController),

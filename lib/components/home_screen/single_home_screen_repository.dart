@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_touch_ripple/flutter_touch_ripple.dart';
 import 'package:go_router/go_router.dart';
@@ -28,118 +25,115 @@ class SingleHomeScreenRepository extends StatelessWidget {
   Widget build(BuildContext context) {
     final kPrimaryColor = Theme.of(context).primaryColor;
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return FadeInUp(
-      duration: Duration(milliseconds: min(index + 1, 5) * 100),
-      child: TouchRipple(
-        onTap: () => context
-            .push('${RepositoryDetailsScreen.kRouteName}/${repositoryDto.id}'),
-        rippleColor: kPrimaryColor.withValues(alpha: 0.05),
-        child: Container(
-          decoration: BoxDecoration(
-            color: kPrimaryColor.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: EdgeInsets.symmetric(
-            vertical: 5,
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 8,
-            children: [
-              Row(
-                spacing: 10,
-                children: [
-                  ReusableCircleAvatar(
-                    avatarUrl: repositoryDto.owner.avatarUrl,
-                    radius: 10,
-                  ),
-                  Expanded(
-                    child: Text(
-                      repositoryDto.fullName,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Icon(
-                    Icons.open_in_new,
-                    color: kPrimaryColor,
-                    size: 16,
-                  ),
-                ],
-              ),
-              Text(
-                repositoryDto.description?.trim().isEmpty ?? true
-                    ? 'No Descriptions Found'
-                    : repositoryDto.description!,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: getSecondaryTextColor(isDarkTheme),
+    return TouchRipple(
+      onTap: () => context
+          .push('${RepositoryDetailsScreen.kRouteName}/${repositoryDto.id}'),
+      rippleColor: kPrimaryColor.withValues(alpha: 0.05),
+      child: Container(
+        decoration: BoxDecoration(
+          color: kPrimaryColor.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        margin: EdgeInsets.symmetric(
+          vertical: 5,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 20,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                ReusableCircleAvatar(
+                  avatarUrl: repositoryDto.owner.avatarUrl,
+                  radius: 10,
                 ),
-                maxLines: 2,
-              ),
-              Divider(
-                color: kPrimaryColor.withValues(alpha: 0.15),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  if (repositoryDto.language != null)
-                    Row(
-                      spacing: 5,
-                      children: [
-                        Container(
-                          height: 12,
-                          width: 12,
-                          decoration: BoxDecoration(
-                            color: kPrimaryColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        SingleHomeScreenRepositoryText(
-                          text: repositoryDto.language!,
-                        ),
-                      ],
+                Expanded(
+                  child: Text(
+                    repositoryDto.fullName,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  Row(
-                    spacing: 5,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 15,
-                        color: kStarColor,
-                      ),
-                      SingleHomeScreenRepositoryText(
-                        text: repositoryDto.stargazersCount.toString(),
-                      ),
-                    ],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                  Row(
-                    spacing: 5,
-                    children: [
-                      Icon(
-                        Icons.watch_later_outlined,
-                        size: 15,
-                        color: getSecondaryTextColor(isDarkTheme),
-                      ),
-                      SingleHomeScreenRepositoryText(
-                        text:
-                            'Updated ${DateFormat('d MMM, yyyy').format(repositoryDto.updatedAt)}',
-                      ),
-                    ],
-                  ),
-                ],
+                ),
+                Icon(
+                  Icons.open_in_new,
+                  color: kPrimaryColor,
+                  size: 16,
+                ),
+              ],
+            ),
+            Text(
+              repositoryDto.description?.trim().isEmpty ?? true
+                  ? 'No Descriptions Found'
+                  : repositoryDto.description!,
+              style: TextStyle(
+                fontSize: 14,
+                color: getSecondaryTextColor(isDarkTheme),
               ),
-            ],
-          ),
+              maxLines: 2,
+            ),
+            Divider(
+              color: kPrimaryColor.withValues(alpha: 0.15),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                if (repositoryDto.language != null)
+                  Row(
+                    spacing: 5,
+                    children: [
+                      Container(
+                        height: 12,
+                        width: 12,
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      SingleHomeScreenRepositoryText(
+                        text: repositoryDto.language!,
+                      ),
+                    ],
+                  ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: kStarColor,
+                    ),
+                    SingleHomeScreenRepositoryText(
+                      text: repositoryDto.stargazersCount.toString(),
+                    ),
+                  ],
+                ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(
+                      Icons.watch_later_outlined,
+                      size: 15,
+                      color: getSecondaryTextColor(isDarkTheme),
+                    ),
+                    SingleHomeScreenRepositoryText(
+                      text:
+                          'Updated ${DateFormat('d MMM, yyyy').format(repositoryDto.updatedAt)}',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -177,8 +171,10 @@ class SingleHomeScreenRepositorySkeletor extends StatelessWidget {
                 Center(
                   child: CircleAvatar(
                     radius: 10,
-                    backgroundImage: NetworkImage(
-                      'https://avatars.githubusercontent.com/u/14101776?v=4',
+                    backgroundColor: kPrimaryColor.withValues(alpha: 0.1),
+                    child: Text(
+                      'PD',
+                      style: TextStyle(fontSize: 8),
                     ),
                   ),
                 ),

@@ -13,6 +13,7 @@ class ChangeThemMode extends StatelessWidget {
       title: 'Dark Mode',
       iconData: Icons.contrast_outlined,
       child: Switch(
+        padding: EdgeInsets.symmetric(horizontal: 0),
         activeColor: kPrimaryColor,
         inactiveThumbColor: kPrimaryColor.withValues(alpha: 0.3),
         inactiveTrackColor: kPrimaryColor.withValues(alpha: 0.3),

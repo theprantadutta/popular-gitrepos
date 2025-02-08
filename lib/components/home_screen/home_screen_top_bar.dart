@@ -4,25 +4,25 @@ import 'package:go_router/go_router.dart';
 import '../../screens/settings_screen.dart';
 import '../shared/hero_icon_component.dart';
 
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+class HomeScreenTopBar extends StatelessWidget {
+  const HomeScreenTopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final kPrimaryColor = Theme.of(context).primaryColor;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return Container(
       height: MediaQuery.sizeOf(context).height * 0.06,
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Image(
-              image: AssetImage(
-                'assets/images/popular_gitrepos_logo.png',
-              ),
-              height: 30,
-              width: 30,
-              fit: BoxFit.cover,
+          CircleAvatar(
+            backgroundColor:
+                kPrimaryColor.withValues(alpha: isDarkTheme ? 0.6 : 0.1),
+            radius: 18,
+            foregroundImage: AssetImage(
+              'assets/images/popular_gitrepos_logo.png',
             ),
           ),
           Row(

@@ -2,13 +2,13 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:popular_gitrepos/navigation/app_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger_observer.dart';
 
 import 'constants/selectors.dart';
 import 'constants/shared_preference_keys.dart';
+import 'navigation/app_navigation.dart';
 import 'service_locator/init_service_locators.dart';
 
 Talker? talker;

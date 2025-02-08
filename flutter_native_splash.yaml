@@ -9,6 +9,6 @@ flutter_native_splash:
     image: assets/images/popular_gitrepos_logo.png
     image_dark: assets/images/popular_gitrepos_logo.png
     color: "#ffffff"
-    color_dark: "#0b111f"
+    color_dark: "#ffffff"
 
   fullscreen: true
